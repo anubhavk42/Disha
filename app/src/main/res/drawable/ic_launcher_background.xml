@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Solid dark backdrop with subtle diagonal gradient -->
+    <path
+        android:pathData="M0,0h108v108H0z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="0"
+                android:startY="0"
+                android:endX="108"
+                android:endY="108"
+                android:type="linear">
+                <item android:color="#1C1B1F" android:offset="0.0"/>
+                <item android:color="#2B2930" android:offset="1.0"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Subtle navigation grids / coordinate lines -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.08"
+        android:strokeWidth="0.8"
+        android:pathData="M54,0V108 M0,54H108" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.05"
+        android:strokeWidth="0.6"
+        android:pathData="M54,54m-24,0a24,24 0,1 1,48 0a24,24 0,1 1,-48 0" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.03"
+        android:strokeWidth="0.6"
+        android:pathData="M54,54m-42,0a42,42 0,1 1,84 0a42,42 0,1 1,-84 0" />
+</vector>

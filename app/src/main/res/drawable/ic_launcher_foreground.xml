@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Outer exquisite tracking circle -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.1"
+        android:strokeWidth="1.5"
+        android:pathData="M54,54m-38,0a38,38 0,1 1,76 0a38,38 0,1 1,-76 0" />
+        
+    <!-- Main Left wing (glowing high-minimalism lavender) -->
+    <path
+        android:fillColor="#D0BCFF"
+        android:pathData="M76,32 L32,54 L48,60 Z" />
+
+    <!-- Main Right wing (mint teal highlight) -->
+    <path
+        android:fillColor="#80F5D2"
+        android:pathData="M76,32 L48,60 L54,76 Z" />
+
+    <!-- Progress nodes / Trailing career trail dots -->
+    <path
+        android:fillColor="#EFB8C8"
+        android:pathData="M32,76m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0" />
+        
+    <path
+        android:fillColor="#D0BCFF"
+        android:pathData="M42,66m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
+</vector>
