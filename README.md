@@ -1,21 +1,58 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Disha 🧭
+**Your AI scout for better roles.**
 
-# Run and deploy your AI Studio app
+AI-powered career matching app for India — matches your profile to jobs intelligently, automates applications, and helps you land better roles faster.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/1ea9c4b1-bfc0-44e2-84ed-1cd5471ab638
+## 📱 Screenshots
 
-## Run Locally
+<p align="center">
+  <img src="screenshots/screenshot_2.jpeg" width="30%" />
+  <img src="screenshots/screenshot_3.jpeg" width="30%" />
+  <img src="screenshots/screenshot_4.jpeg" width="30%" />
+</p>
+<p align="center">
+  <img src="screenshots/screenshot_5.jpeg" width="30%" />
+  <img src="screenshots/screenshot_6.jpeg" width="30%" />
+  <img src="screenshots/screenshot_7.jpeg" width="30%" />
+</p>
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+---
 
+## ✨ Features
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+- 🎯 **AI Job Matching** — 98% match scoring based on your profile
+- 🤖 **Auto Apply** — Automate applications across LinkedIn, Indeed & Naukri
+- 📄 **Magical Cover Letter** — AI-generated personalized cover letters
+- 🔍 **Deep Web Scraping** — Live job listings from multiple platforms
+- 💼 **CV Builder** — Professional resume PDF for ₹49
+- 🔔 **Smart Notifications** — Job alerts and application updates
+- 🔒 **Privacy First** — Your data never sold, always in your control
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Language | Kotlin |
+| UI | Jetpack Compose |
+| Backend | Firebase |
+| Architecture | MVVM |
+| Database | Room + DataStore |
+
+---
+
+## 🚀 Setup
+
+Add your keys to `local.properties`:
+---
+
+## 👨‍💻 Built by
+
+**Anubhav Kapoor** — B.Pharm + MBA (SPJIMR)
+PM portfolio project exploring AI-first career tools for India.
+
+---
+*Disha — Built for India's next generation of job seekers*
