@@ -21,7 +21,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Brightness6
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -246,9 +248,9 @@ private fun ThemeOptionCard(
     val borderColor = if (isSelected) colorScheme.primary else colorScheme.outlineVariant
     val textColor = if (isSelected) colorScheme.primary else colorScheme.onSurfaceVariant
     val icon = when (title) {
-        "Dark" -> Icons.Default.Lock
-        "Light" -> Icons.Default.Info
-        else -> Icons.Default.Settings
+        "Dark" -> Icons.Default.DarkMode
+        "Light" -> Icons.Default.LightMode
+        else -> Icons.Default.Brightness6
     }
 
     Card(

@@ -55,10 +55,26 @@ import com.example.R
 import com.example.data.JobMatch
 import com.example.ui.DishaViewModel
 import com.example.ui.theme.*
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 
-private fun companyAvatarColor(company: String): Color {
-    val hue = (((company.hashCode() % 360) + 360) % 360).toFloat()
-    return Color.hsv(hue = hue, saturation = 0.55f, value = 0.55f)
+private val responsibilitiesAdapter: JsonAdapter<List<String>> by lazy {
+    val moshi = Moshi.Builder().build()
+    val type = Types.newParameterizedType(List::class.java, String::class.java)
+    moshi.adapter(type)
+}
+
+/** Parses [JobMatch.responsibilitiesJson]; falls back to a single generic line if the field is empty/unset or malformed. */
+private fun parseResponsibilities(json: String): List<String> {
+    val parsed = try {
+        responsibilitiesAdapter.fromJson(json)
+    } catch (e: Exception) {
+        null
+    }
+    return parsed.takeUnless { it.isNullOrEmpty() } ?: listOf(
+        "Collaborate cross-functionally to deliver on the core objectives of this role."
+    )
 }
 
 @Composable
@@ -393,11 +409,7 @@ fun JobDetailScreen(
                         Text(text = "Job Responsibilities", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 20.sp)
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        val responsibilities = listOf(
-                            "Lead end-to-end design for core listening experiences, ensuring a seamless user journey across mobile and desktop platforms.",
-                            "Collaborate tightly with cross-functional teams including PMs, Engineering, and Data Science to define product vision.",
-                            "Mentor junior designers and contribute to the evolution of the Encore design system."
-                        )
+                        val responsibilities = remember(job.responsibilitiesJson) { parseResponsibilities(job.responsibilitiesJson) }
 
                         responsibilities.forEach { resp ->
                             Row(modifier = Modifier.padding(vertical = 6.dp), verticalAlignment = Alignment.Top) {
@@ -430,7 +442,8 @@ fun JobDetailScreen(
                                     .background(SunsetOrange),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(text = "PS", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                val recruiterInitials = job.recruiterName.split(" ").mapNotNull { it.firstOrNull()?.toString() }.take(2).joinToString("").uppercase()
+                                Text(text = recruiterInitials, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             }
 
                             Spacer(modifier = Modifier.width(12.dp))
@@ -477,6 +490,26 @@ fun JobDetailScreen(
     }
 }
 
+private fun noteSkillsPhrase(jobTitle: String): String {
+    val t = jobTitle.lowercase()
+    return when {
+        "design" in t -> "user-centered design and end-to-end product thinking"
+        "engineer" in t || "developer" in t -> "scalable engineering and clean system design"
+        "product manager" in t || " pm" in t -> "cross-functional product strategy and execution"
+        "data" in t || "scientist" in t || "analyst" in t -> "data-driven analysis and clear communication of insights"
+        "sales" in t -> "consultative selling and relationship-building"
+        "marketing" in t || "growth" in t -> "growth strategy and performance marketing"
+        "hr" in t || "people" in t -> "people operations and organizational development"
+        "legal" in t || "counsel" in t -> "sound legal judgment and contract negotiation"
+        "operations" in t || "supply chain" in t -> "process optimization and operational execution"
+        "security" in t -> "security engineering and risk mitigation"
+        "finance" in t || "fp&a" in t -> "financial modeling and analytical rigor"
+        "research" in t || "clinical" in t -> "rigorous research methodology and attention to detail"
+        "consultant" in t -> "structured problem-solving and client management"
+        else -> "adaptability and a strong track record of delivering results"
+    }
+}
+
 @Composable
 fun SendNoteScreen(
     jobTitle: String,
@@ -487,17 +520,21 @@ fun SendNoteScreen(
 ) {
     var letterBody by remember {
         mutableStateOf(
-            "Dear $recruiterName,\n\nI hope this message finds you well. I am highly interested in the $jobTitle opportunity at $companyName that I discovered through Disha. I believe my skills in UX Design and product flow strategies would be a valuable asset to your design team.\n\nI look forward to the possibility of discussing how I can contribute.\n\nBest regards,\nAnubhav Kapoor"
+            "Dear $recruiterName,\n\nI hope this message finds you well. I am highly interested in the $jobTitle opportunity at $companyName that I discovered through Disha. I believe my skills in ${noteSkillsPhrase(jobTitle)} would be a valuable asset to your team.\n\nI look forward to the possibility of discussing how I can contribute.\n\nBest regards,\nAnubhav Kapoor"
         )
     }
     val context = LocalContext.current
     val haptics = rememberHaptics()
 
-    Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
+    Scaffold(
+        containerColor = SpaceBlack,
+        contentWindowInsets = WindowInsets.safeDrawing.exclude(WindowInsets.ime)
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .imePadding()
                 .padding(24.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -517,17 +554,7 @@ fun SendNoteScreen(
                     }
                 )
                 Text(text = "Personal Note", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                Text(
-                    text = "Send",
-                    color = SeafoamMint,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    modifier = Modifier.clickable {
-                        haptics(Haptic.Confirm)
-                        Toast.makeText(context, "Note sent to recruiter!", Toast.LENGTH_SHORT).show()
-                        onSent()
-                    }
-                )
+                Spacer(modifier = Modifier.width(56.dp))
             }
 
             // Textarea Editor card

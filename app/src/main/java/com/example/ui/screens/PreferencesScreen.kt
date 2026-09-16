@@ -65,11 +65,15 @@ fun OnboardingRefineScreen(viewModel: DishaViewModel, onDone: () -> Unit, onCanc
     var maxVal by remember { mutableStateOf(45f) }
     val haptics = rememberHaptics()
 
-    Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
+    Scaffold(
+        containerColor = SpaceBlack,
+        contentWindowInsets = WindowInsets.safeDrawing.exclude(WindowInsets.ime)
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .imePadding()
                 .padding(24.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {

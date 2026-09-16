@@ -65,7 +65,6 @@ fun AppProfileScreen(
 ) {
     val context = LocalContext.current
     val activeSession by viewModel.activeSession.collectAsState()
-    val isDark by viewModel.isDarkMode.collectAsState()
     val isHighContrast by viewModel.isHighContrastMode.collectAsState()
 
     // Profile input states
@@ -190,49 +189,6 @@ fun AppProfileScreen(
                         ) {
                             Text(text = "Save Profile Details", color = Color.White, fontWeight = FontWeight.Bold)
                         }
-                    }
-                }
-            }
-
-            // Dark Mode Switch Row
-            item {
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = DeepTeal),
-                    shape = RoundedCornerShape(16.dp),
-                    border = BorderStroke(1.dp, BorderHighlight),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = if (isDark) Icons.Default.Lock else Icons.Default.Info,
-                                contentDescription = "Theme Icon",
-                                tint = ElectricTeal,
-                                modifier = Modifier.size(24.dp)
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
-                            Column {
-                                Text(text = "Dark Mode Active", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                                Text(text = if (isDark) "Ambient cosmic glow activated" else "Classic comfortable light mode active", color = TextSecondary, fontSize = 12.sp)
-                            }
-                        }
-                        Switch(
-                            checked = isDark,
-                            onCheckedChange = {
-                                haptics(Haptic.Toggle)
-                                viewModel.toggleDarkMode()
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = SeafoamMint,
-                                checkedTrackColor = ElectricTeal
-                            )
-                        )
                     }
                 }
             }

@@ -70,12 +70,13 @@ fun AppAutomateScreen(
     Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
         containerColor = SpaceBlack,
-        contentWindowInsets = WindowInsets.safeDrawing
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
                 .hazeSource(state = hazeState)
                 .padding(24.dp)
                 .verticalScroll(rememberScrollState())

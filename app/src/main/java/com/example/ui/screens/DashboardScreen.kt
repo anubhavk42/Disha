@@ -155,6 +155,7 @@ fun AppDashboardScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             containerColor = SpaceBlack,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
             topBar = {
                 Column(
                     modifier = Modifier
@@ -187,24 +188,6 @@ fun AppDashboardScreen(
                         }
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            // Dark Mode quick indicator toggle
-                            IconButton(
-                                onClick = {
-                                    haptics(Haptic.Toggle)
-                                    viewModel.toggleDarkMode()
-                                },
-                                modifier = Modifier
-                                    .background(CardTeal, CircleShape)
-                                    .size(40.dp)
-                            ) {
-                                val isDark by viewModel.isDarkMode.collectAsState()
-                                Icon(
-                                    imageVector = if (isDark) Icons.Default.Lock else Icons.Default.Info,
-                                    contentDescription = "Toggle Quick DarkMode",
-                                    tint = ElectricTeal
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
                             // Settings navigation trigger
                             IconButton(
                                 onClick = {

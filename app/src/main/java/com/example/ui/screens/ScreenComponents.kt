@@ -92,6 +92,12 @@ fun getSalaryLpa(salaryRange: String): Pair<Int, Int> {
     }
 }
 
+/** Deterministic per-company avatar color, hashed from the company name so it stays consistent across screens. */
+fun companyAvatarColor(company: String): Color {
+    val hue = (((company.hashCode() % 360) + 360) % 360).toFloat()
+    return Color.hsv(hue = hue, saturation = 0.55f, value = 0.55f)
+}
+
 @Composable
 fun CustomButton(
     text: String,

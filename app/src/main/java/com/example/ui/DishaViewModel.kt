@@ -127,24 +127,6 @@ class DishaViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun toggleDarkMode() {
-        viewModelScope.launch {
-            val session = repository.getActiveSession()
-            val newDark = !isDarkMode.value
-            isDarkMode.value = newDark
-
-            // Sync with DataStore UserPreferences as well!
-            val userPrefs = com.example.data.datastore.UserPreferences(getApplication())
-            userPrefs.setTheme(if (newDark) "Dark" else "Light")
-
-            if (session != null) {
-                repository.updateSession(session.copy(
-                    isDarkMode = newDark
-                ))
-            }
-        }
-    }
-
     fun toggleHighContrastMode() {
         viewModelScope.launch {
             val session = repository.getActiveSession()
