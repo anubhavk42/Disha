@@ -78,10 +78,13 @@ Supporting metrics:
 
 ## Known limits
 
-An honest list of what's missing or unverified:
+An honest list of what's missing or unverified — this is a portfolio prototype, and it's more useful to say that plainly than to let the feature list imply otherwise:
 
-- **Auto-apply automation depends on third-party platform structure** (LinkedIn, Indeed, Naukri) and can break if those platforms change their UI or add anti-automation measures — this is a standing operational risk, not a one-time bug.
-- **Match-scoring accuracy hasn't been independently benchmarked** — evaluated through hands-on testing, not a measured precision rate.
+- **Auth is currently simulated**, not a live Firebase Identity Toolkit integration — there's no real account system behind the login screen yet.
+- **Job listings are a seeded local dataset (20 roles across varied domains)**, not live scraping from LinkedIn, Indeed, or Naukri. The UI is built to support real aggregation; the data pipeline behind it isn't connected yet.
+- **The CV builder and cover letter pricing (₹49 each) is UI copy, not a working payment flow** — no payment gateway is wired in. The "How I would measure it" metrics above (conversion rate, etc.) describe what I'd track once that's real, not what's measurable today.
+- **Auto-apply automation is a designed flow, not yet live** — the actual cross-platform execution described in the trade-off above is the intended v1 direction, not something currently running against real job platforms.
+- **The "AI Interview Assistant" tab doesn't yet deliver on its label** — it exists in the nav but the underlying feature isn't built out.
 - **No automated tests.**
 
 ## Development note
