@@ -34,7 +34,7 @@ class JobRepository(private val context: Context) {
                 logoUrl = "https://logo.clearbit.com/spotify.com",
                 location = "Stockholm, SE (Remote)",
                 isRemote = true,
-                salaryRange = "₹35,00,000 - ₹45,00,000/yr",
+                salaryRange = "₹35L - ₹45L",
                 matchScore = 94,
                 sourcePlatform = "Spotify",
                 isFullTime = true,
@@ -109,7 +109,7 @@ class JobRepository(private val context: Context) {
                 logoUrl = "https://logo.clearbit.com/credhive.com",
                 location = "Noida, Uttar Pradesh",
                 isRemote = false,
-                salaryRange = "15 LPA - 20 LPA",
+                salaryRange = "₹15L - ₹20L",
                 matchScore = 92,
                 sourcePlatform = "LinkedIn"
             ),
@@ -120,7 +120,7 @@ class JobRepository(private val context: Context) {
                 logoUrl = "https://logo.clearbit.com/makemytrip.com",
                 location = "Gurugram, Haryana",
                 isRemote = false,
-                salaryRange = "15 LPA - 20 LPA",
+                salaryRange = "₹15L - ₹20L",
                 matchScore = 88,
                 sourcePlatform = "Naukri"
             ),
@@ -131,10 +131,30 @@ class JobRepository(private val context: Context) {
                 logoUrl = "https://logo.clearbit.com/sumologic.com",
                 location = "Gurugram, Haryana",
                 isRemote = false,
-                salaryRange = "15 LPA - 20 LPA",
+                salaryRange = "₹15L - ₹20L",
                 matchScore = 85,
                 sourcePlatform = "Naukri"
-            )
+            ),
+            JobMatch(id = "job_10", title = "Data Scientist", company = "Flipkart", logoUrl = "https://logo.clearbit.com/flipkart.com", location = "Bangalore, India", isRemote = false, salaryRange = "₹30L - ₹42L", matchScore = 91, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_11", title = "ML Engineer", company = "Razorpay", logoUrl = "https://logo.clearbit.com/razorpay.com", location = "Bangalore, India", isRemote = true, salaryRange = "₹32L - ₹48L", matchScore = 93, sourcePlatform = "Naukri"),
+            JobMatch(id = "job_12", title = "Growth Marketing Manager", company = "Meesho", logoUrl = "https://logo.clearbit.com/meesho.com", location = "Bangalore, India", isRemote = false, salaryRange = "₹22L - ₹32L", matchScore = 87, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_13", title = "Backend Engineer (Java)", company = "PhonePe", logoUrl = "https://logo.clearbit.com/phonepe.com", location = "Pune, India", isRemote = false, salaryRange = "₹25L - ₹38L", matchScore = 90, sourcePlatform = "Indeed"),
+            JobMatch(id = "job_14", title = "Enterprise Sales Manager", company = "Freshworks", logoUrl = "https://logo.clearbit.com/freshworks.com", location = "Chennai, India", isRemote = false, salaryRange = "₹18L - ₹28L", matchScore = 84, sourcePlatform = "Naukri"),
+            JobMatch(id = "job_15", title = "FP&A Analyst", company = "HDFC Bank", logoUrl = "https://logo.clearbit.com/hdfcbank.com", location = "Mumbai, India", isRemote = false, salaryRange = "₹14L - ₹20L", matchScore = 79, sourcePlatform = "Company Site"),
+            JobMatch(id = "job_16", title = "People Operations Lead", company = "Zoho", logoUrl = "https://logo.clearbit.com/zoho.com", location = "Chennai, India", isRemote = false, salaryRange = "₹20L - ₹28L", matchScore = 85, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_17", title = "Supply Chain Analyst", company = "BigBasket", logoUrl = "https://logo.clearbit.com/bigbasket.com", location = "Bangalore, India", isRemote = false, salaryRange = "₹15L - ₹22L", matchScore = 81, sourcePlatform = "Indeed"),
+            JobMatch(id = "job_18", title = "Corporate Counsel", company = "CRED", logoUrl = "https://logo.clearbit.com/cred.club", location = "Bangalore, India", isRemote = false, salaryRange = "₹28L - ₹40L", matchScore = 86, sourcePlatform = "Naukri"),
+            JobMatch(id = "job_19", title = "Customer Success Manager", company = "Freshdesk", logoUrl = "https://logo.clearbit.com/freshdesk.com", location = "Remote", isRemote = true, salaryRange = "₹16L - ₹24L", matchScore = 83, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_20", title = "Clinical Research Associate", company = "Dr. Reddy's Laboratories", logoUrl = "https://logo.clearbit.com/drreddys.com", location = "Hyderabad, India", isRemote = false, salaryRange = "₹12L - ₹18L", matchScore = 88, sourcePlatform = "Company Site"),
+            JobMatch(id = "job_21", title = "Regulatory Affairs Manager", company = "Cipla", logoUrl = "https://logo.clearbit.com/cipla.com", location = "Mumbai, India", isRemote = false, salaryRange = "₹18L - ₹26L", matchScore = 90, sourcePlatform = "Naukri"),
+            JobMatch(id = "job_22", title = "Content Strategist", company = "Netflix India", logoUrl = "https://logo.clearbit.com/netflix.com", location = "Mumbai, India", isRemote = false, salaryRange = "₹20L - ₹30L", matchScore = 82, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_23", title = "Site Reliability Engineer", company = "Groww", logoUrl = "https://logo.clearbit.com/groww.in", location = "Bangalore, India", isRemote = true, salaryRange = "₹28L - ₹40L", matchScore = 89, sourcePlatform = "Indeed"),
+            JobMatch(id = "job_24", title = "Security Engineer", company = "Paytm", logoUrl = "https://logo.clearbit.com/paytm.com", location = "Noida, India", isRemote = false, salaryRange = "₹24L - ₹36L", matchScore = 87, sourcePlatform = "Naukri"),
+            JobMatch(id = "job_25", title = "Management Consultant", company = "upGrad", logoUrl = "https://logo.clearbit.com/upgrad.com", location = "Mumbai, India", isRemote = false, salaryRange = "₹18L - ₹26L", matchScore = 80, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_26", title = "Category Manager", company = "Nykaa", logoUrl = "https://logo.clearbit.com/nykaa.com", location = "Mumbai, India", isRemote = false, salaryRange = "₹16L - ₹24L", matchScore = 83, sourcePlatform = "Indeed"),
+            JobMatch(id = "job_27", title = "Mobile Engineer (Android)", company = "Ola", logoUrl = "https://logo.clearbit.com/olacabs.com", location = "Bangalore, India", isRemote = false, salaryRange = "₹26L - ₹38L", matchScore = 92, sourcePlatform = "LinkedIn"),
+            JobMatch(id = "job_28", title = "Operations Manager", company = "Urban Company", logoUrl = "https://logo.clearbit.com/urbancompany.com", location = "Delhi NCR, India", isRemote = false, salaryRange = "₹15L - ₹22L", matchScore = 78, sourcePlatform = "Naukri"),
+            JobMatch(id = "job_29", title = "Game Designer", company = "Nazara Technologies", logoUrl = "https://logo.clearbit.com/nazara.com", location = "Mumbai, India", isRemote = false, salaryRange = "₹14L - ₹20L", matchScore = 76, sourcePlatform = "Company Site")
         )
         matchDao.insertMatches(defaultJobs)
 
