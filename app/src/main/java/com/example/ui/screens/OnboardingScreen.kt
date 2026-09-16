@@ -42,7 +42,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -128,7 +127,7 @@ fun OnboardingWelcomeScreen(onGetStarted: () -> Unit) {
                     color = TextPrimary,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = SpaceGrotesk,
                     letterSpacing = (-1).sp
                 )
             }
@@ -144,6 +143,7 @@ fun OnboardingWelcomeScreen(onGetStarted: () -> Unit) {
                     fontSize = 42.sp,
                     lineHeight = 48.sp,
                     fontWeight = FontWeight.Bold,
+                    fontFamily = SpaceGrotesk,
                     textAlign = TextAlign.Center,
                     letterSpacing = (-1).sp
                 )
@@ -176,6 +176,7 @@ fun OnboardingWelcomeScreen(onGetStarted: () -> Unit) {
 
 @Composable
 fun OnboardingConsentScreen(onConsent: () -> Unit, onCancel: () -> Unit) {
+    val haptics = rememberHaptics()
     Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
         Column(
             modifier = Modifier
@@ -193,7 +194,10 @@ fun OnboardingConsentScreen(onConsent: () -> Unit, onCancel: () -> Unit) {
                     text = "Cancel",
                     color = TextSecondary,
                     modifier = Modifier
-                        .clickable { onCancel() }
+                        .clickable {
+                            haptics(Haptic.Click)
+                            onCancel()
+                        }
                         .padding(8.dp),
                     fontSize = 16.sp
                 )
@@ -225,6 +229,7 @@ fun OnboardingConsentScreen(onConsent: () -> Unit, onCancel: () -> Unit) {
                             color = TextPrimary,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
+                            fontFamily = SpaceGrotesk,
                             modifier = Modifier.padding(bottom = 20.dp)
                         )
 
@@ -276,6 +281,7 @@ fun OnboardingConsentScreen(onConsent: () -> Unit, onCancel: () -> Unit) {
 
 @Composable
 fun OnboardingProfileSetupScreen(viewModel: DishaViewModel, onContinue: () -> Unit, onBack: () -> Unit) {
+    val haptics = rememberHaptics()
     val activeSession by viewModel.activeSession.collectAsState()
     val userName = activeSession?.name ?: "Anubhav Kapoor"
     val designation = activeSession?.designation ?: "Product · Growth"
@@ -294,7 +300,10 @@ fun OnboardingProfileSetupScreen(viewModel: DishaViewModel, onContinue: () -> Un
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBack) {
+                IconButton(onClick = {
+                    haptics(Haptic.Click)
+                    onBack()
+                }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = TextPrimary)
                 }
                 Text(
@@ -331,7 +340,8 @@ fun OnboardingProfileSetupScreen(viewModel: DishaViewModel, onContinue: () -> Un
                     text = userName,
                     color = TextPrimary,
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = SpaceGrotesk
                 )
 
                 Text(
@@ -355,7 +365,10 @@ fun OnboardingProfileSetupScreen(viewModel: DishaViewModel, onContinue: () -> Un
                         ),
                         shape = RoundedCornerShape(24.dp)
                     )
-                    .clickable { viewModel.uploadResumeAndProgress("Anubhav_Kapoor_Resume.pdf") }
+                    .clickable {
+                        haptics(Haptic.Confirm)
+                        viewModel.uploadResumeAndProgress("Anubhav_Kapoor_Resume.pdf")
+                    }
                     .testTag("upload_resume_box"),
                 contentAlignment = Alignment.Center
             ) {
@@ -414,6 +427,7 @@ fun OnboardingProfileSetupScreen(viewModel: DishaViewModel, onContinue: () -> Un
 
 @Composable
 fun OnboardingAlertsScreen(viewModel: DishaViewModel, onComplete: () -> Unit, onSkip: () -> Unit) {
+    val haptics = rememberHaptics()
     val activeSession by viewModel.activeSession.collectAsState()
     val dailyDigest = activeSession?.dailyDigest ?: true
     val secureBiometrics = activeSession?.secureBiometrics ?: false
@@ -434,7 +448,10 @@ fun OnboardingAlertsScreen(viewModel: DishaViewModel, onComplete: () -> Unit, on
                 Text(
                     text = "Cancel",
                     color = TextSecondary,
-                    modifier = Modifier.clickable { onSkip() }
+                    modifier = Modifier.clickable {
+                        haptics(Haptic.Click)
+                        onSkip()
+                    }
                 )
                 Text(
                     text = "Alerts & Security Setup",
@@ -480,7 +497,10 @@ fun OnboardingAlertsScreen(viewModel: DishaViewModel, onComplete: () -> Unit, on
                         }
                         Switch(
                             checked = dailyDigest,
-                            onCheckedChange = { viewModel.updateToggleDigest(it) },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.updateToggleDigest(it)
+                            },
                             colors = SwitchDefaults.colors(checkedThumbColor = SeafoamMint, checkedTrackColor = ElectricTeal)
                         )
                     }
@@ -506,7 +526,10 @@ fun OnboardingAlertsScreen(viewModel: DishaViewModel, onComplete: () -> Unit, on
                         }
                         Switch(
                             checked = secureBiometrics,
-                            onCheckedChange = { viewModel.updateToggleBiometrics(it) },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.updateToggleBiometrics(it)
+                            },
                             colors = SwitchDefaults.colors(checkedThumbColor = SeafoamMint, checkedTrackColor = ElectricTeal)
                         )
                     }
@@ -526,7 +549,10 @@ fun OnboardingAlertsScreen(viewModel: DishaViewModel, onComplete: () -> Unit, on
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
-                    onClick = onSkip,
+                    onClick = {
+                        haptics(Haptic.Click)
+                        onSkip()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
@@ -575,6 +601,7 @@ fun OnboardingSuccessScreen(onGoDashboard: () -> Unit) {
                     color = TextPrimary,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.ExtraBold,
+                    fontFamily = SpaceGrotesk,
                     textAlign = TextAlign.Center
                 )
 

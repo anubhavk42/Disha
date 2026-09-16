@@ -64,6 +64,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ui.theme.Haptic
+import com.example.ui.theme.SpaceGrotesk
+import com.example.ui.theme.rememberHaptics
 
 /**
  * Privacy & Legal Configuration Screen Composable.
@@ -80,6 +83,7 @@ fun PrivacyScreen(
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
 
     val profileVis by viewModel.profileVisibility.collectAsState()
     val consentGiven by viewModel.dataConsentGiven.collectAsState()
@@ -101,11 +105,15 @@ fun PrivacyScreen(
                         text = "Privacy & Legal Policies",
                         color = colorScheme.onBackground,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGrotesk
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = {
+                        haptics(Haptic.Click)
+                        onBack()
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -170,7 +178,10 @@ fun PrivacyScreen(
                                     modifier = Modifier
                                         .background(colorScheme.background, RoundedCornerShape(8.dp))
                                         .border(BorderStroke(1.dp, colorScheme.outlineVariant), RoundedCornerShape(8.dp))
-                                        .clickable { dropdownExpanded = true }
+                                        .clickable {
+                                            haptics(Haptic.Click)
+                                            dropdownExpanded = true
+                                        }
                                         .padding(horizontal = 12.dp, vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -188,6 +199,7 @@ fun PrivacyScreen(
                                         DropdownMenuItem(
                                             text = { Text(text = vis, color = colorScheme.onSurface, fontSize = 13.sp) },
                                             onClick = {
+                                                haptics(Haptic.Toggle)
                                                 viewModel.setProfileVisibility(vis)
                                                 dropdownExpanded = false
                                                 Toast.makeText(context, "Profile visibility set to $vis", Toast.LENGTH_SHORT).show()
@@ -210,7 +222,10 @@ fun PrivacyScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { showConsentDialog = true }
+                            .clickable {
+                                haptics(Haptic.Click)
+                                showConsentDialog = true
+                            }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -311,7 +326,10 @@ fun PrivacyScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { showCookieDialog = true }
+                                .clickable {
+                                haptics(Haptic.Click)
+                                showCookieDialog = true
+                            }
                                 .padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -337,6 +355,7 @@ fun PrivacyScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
+                                    haptics(Haptic.Confirm)
                                     Toast.makeText(context, "Preparing offline database export ZIP...", Toast.LENGTH_SHORT).show()
                                     Toast.makeText(context, "Export Complete: Check /Downloads/disha_data_export.zip", Toast.LENGTH_LONG).show()
                                 }
@@ -387,7 +406,10 @@ fun PrivacyScreen(
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Button(
-                            onClick = { showDeleteConfirm = true },
+                            onClick = {
+                                haptics(Haptic.Warning)
+                                showDeleteConfirm = true
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = colorScheme.error),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier.fillMaxWidth()
@@ -434,7 +456,10 @@ fun PrivacyScreen(
                         Text(text = "Enable analytical tracking", color = colorScheme.onSurface, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                         Switch(
                             checked = consentGiven,
-                            onCheckedChange = { viewModel.setConsentGiven(it) },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.setConsentGiven(it)
+                            },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = colorScheme.onPrimary,
                                 checkedTrackColor = colorScheme.primary,
@@ -447,7 +472,10 @@ fun PrivacyScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showConsentDialog = false }) {
+                TextButton(onClick = {
+                    haptics(Haptic.Confirm)
+                    showConsentDialog = false
+                }) {
                     Text(text = "Save & Apply", color = colorScheme.primary, fontWeight = FontWeight.Bold)
                 }
             },
@@ -484,7 +512,10 @@ fun PrivacyScreen(
                         Text(text = "Allow session caching", color = colorScheme.onSurface, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                         Switch(
                             checked = cookiePreference,
-                            onCheckedChange = { viewModel.setCookiePreferences(it) },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.setCookiePreferences(it)
+                            },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = colorScheme.onPrimary,
                                 checkedTrackColor = colorScheme.primary,
@@ -497,7 +528,10 @@ fun PrivacyScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showCookieDialog = false }) {
+                TextButton(onClick = {
+                    haptics(Haptic.Confirm)
+                    showCookieDialog = false
+                }) {
                     Text(text = "Confirm Preference", color = colorScheme.primary, fontWeight = FontWeight.Bold)
                 }
             },
@@ -528,6 +562,7 @@ fun PrivacyScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
+                        haptics(Haptic.Warning)
                         showDeleteConfirm = false
                         viewModel.deleteAccountAndAllData {
                             Toast.makeText(context, "Account, profile data, and session cleared successfully.", Toast.LENGTH_LONG).show()
@@ -539,7 +574,10 @@ fun PrivacyScreen(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteConfirm = false }) {
+                TextButton(onClick = {
+                    haptics(Haptic.Click)
+                    showDeleteConfirm = false
+                }) {
                     Text(text = "Cancel", color = colorScheme.onSurface)
                 }
             },
@@ -556,10 +594,14 @@ private fun LegalRow(
     onClick: () -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() }
+            .clickable {
+                haptics(Haptic.Click)
+                onClick()
+            }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween

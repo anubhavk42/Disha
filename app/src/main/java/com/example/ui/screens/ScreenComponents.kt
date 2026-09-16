@@ -99,8 +99,12 @@ fun CustomButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
+    val haptics = rememberHaptics()
     Button(
-        onClick = onClick,
+        onClick = {
+            haptics(Haptic.Click)
+            onClick()
+        },
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(containerColor = ElectricTeal),
         shape = RoundedCornerShape(30.dp),
@@ -156,6 +160,7 @@ fun FlowRowSim(
     items: List<String>,
     onRemove: (String) -> Unit
 ) {
+    val haptics = rememberHaptics()
     androidx.compose.foundation.layout.FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -177,7 +182,10 @@ fun FlowRowSim(
                     tint = SunsetOrange,
                     modifier = Modifier
                         .size(16.dp)
-                        .clickable { onRemove(item) }
+                        .clickable {
+                            haptics(Haptic.Click)
+                            onRemove(item)
+                        }
                 )
             }
         }
@@ -222,6 +230,7 @@ fun AppBottomNavigationBar(
         Triple("Profile", DishaScreen.Profile, Icons.Default.Person)
     )
 
+    val haptics = rememberHaptics()
     val pillShape = RoundedCornerShape(32.dp)
     val glassStyle = HazeStyle(
         backgroundColor = DeepTeal,
@@ -265,7 +274,10 @@ fun AppBottomNavigationBar(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
-                    ) { onSelectTab(route) }
+                    ) {
+                        if (!selected) haptics(Haptic.Click)
+                        onSelectTab(route)
+                    }
             ) {
                 Icon(
                     imageVector = icon,

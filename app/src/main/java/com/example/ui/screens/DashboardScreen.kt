@@ -78,6 +78,7 @@ fun AppDashboardScreen(
     var isFilterSidebarOpen by remember { mutableStateOf(false) }
     var sidebarTab by remember { mutableStateOf("Filters") }
     val hazeState = remember { HazeState() }
+    val haptics = rememberHaptics()
 
     val bookmarkedJobs = remember(jobs) { jobs.filter { it.isBookmarked } }
 
@@ -180,6 +181,7 @@ fun AppDashboardScreen(
                                 text = "Disha",
                                 color = TextPrimary,
                                 fontWeight = FontWeight.ExtraBold,
+                                fontFamily = SpaceGrotesk,
                                 fontSize = 24.sp
                             )
                         }
@@ -187,7 +189,10 @@ fun AppDashboardScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             // Dark Mode quick indicator toggle
                             IconButton(
-                                onClick = { viewModel.toggleDarkMode() },
+                                onClick = {
+                                    haptics(Haptic.Toggle)
+                                    viewModel.toggleDarkMode()
+                                },
                                 modifier = Modifier
                                     .background(CardTeal, CircleShape)
                                     .size(40.dp)
@@ -202,7 +207,10 @@ fun AppDashboardScreen(
                             Spacer(modifier = Modifier.width(8.dp))
                             // Settings navigation trigger
                             IconButton(
-                                onClick = { onNavigateToTab(DishaScreen.RefinePreferences) },
+                                onClick = {
+                                    haptics(Haptic.Click)
+                                    onNavigateToTab(DishaScreen.RefinePreferences)
+                                },
                                 modifier = Modifier
                                     .background(CardTeal, CircleShape)
                                     .size(40.dp)
@@ -231,6 +239,7 @@ fun AppDashboardScreen(
                             color = TextPrimary,
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
+                            fontFamily = SpaceGrotesk,
                             lineHeight = 38.sp,
                             letterSpacing = (-1).sp
                         )
@@ -260,7 +269,10 @@ fun AppDashboardScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         IconButton(
-                            onClick = { isFilterSidebarOpen = true },
+                            onClick = {
+                                haptics(Haptic.Click)
+                                isFilterSidebarOpen = true
+                            },
                             modifier = Modifier
                                 .background(CardTeal, RoundedCornerShape(12.dp))
                                 .size(52.dp)
@@ -307,7 +319,10 @@ fun AppDashboardScreen(
                                             colors = CardDefaults.cardColors(containerColor = DeepTeal),
                                             modifier = Modifier
                                                 .fillParentMaxWidth(0.82f)
-                                                .clickable { onJobClick(match.id) },
+                                                .clickable {
+                                                    haptics(Haptic.Click)
+                                                    onJobClick(match.id)
+                                                },
                                             shape = RoundedCornerShape(20.dp),
                                             border = BorderStroke(1.dp, BorderHighlight)
                                         ) {
@@ -340,7 +355,10 @@ fun AppDashboardScreen(
 
                                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                                         IconButton(
-                                                            onClick = { viewModel.toggleJobBookmark(match.id, !match.isBookmarked) },
+                                                            onClick = {
+                                                                haptics(Haptic.Click)
+                                                                viewModel.toggleJobBookmark(match.id, !match.isBookmarked)
+                                                            },
                                                             modifier = Modifier.size(32.dp)
                                                         ) {
                                                             Icon(
@@ -409,7 +427,10 @@ fun AppDashboardScreen(
                                     border = BorderStroke(1.dp, BorderHighlight),
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .clickable { onJobClick(cardJob.id) }
+                                        .clickable {
+                                            haptics(Haptic.Click)
+                                            onJobClick(cardJob.id)
+                                        }
                                 ) {
                                     Row(
                                         modifier = Modifier
@@ -458,7 +479,10 @@ fun AppDashboardScreen(
                                             Text(text = formatSalaryDisplay(cardJob.salaryRange), color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                                             Spacer(modifier = Modifier.width(4.dp))
                                             IconButton(
-                                                onClick = { viewModel.toggleJobBookmark(cardJob.id, !cardJob.isBookmarked) },
+                                                onClick = {
+                                                    haptics(Haptic.Click)
+                                                    viewModel.toggleJobBookmark(cardJob.id, !cardJob.isBookmarked)
+                                                },
                                                 modifier = Modifier.size(36.dp)
                                             ) {
                                                 Icon(
@@ -494,7 +518,10 @@ fun AppDashboardScreen(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
-                    ) { isFilterSidebarOpen = false }
+                    ) {
+                        haptics(Haptic.Click)
+                        isFilterSidebarOpen = false
+                    }
             )
 
             Row(
@@ -508,7 +535,10 @@ fun AppDashboardScreen(
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
-                        ) { isFilterSidebarOpen = false }
+                        ) {
+                            haptics(Haptic.Click)
+                            isFilterSidebarOpen = false
+                        }
                 )
 
                 Column(
@@ -537,7 +567,10 @@ fun AppDashboardScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = "Sidebar Menu", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                            IconButton(onClick = { isFilterSidebarOpen = false }) {
+                            IconButton(onClick = {
+                                haptics(Haptic.Click)
+                                isFilterSidebarOpen = false
+                            }) {
                                 Icon(imageVector = Icons.Default.Close, contentDescription = "Close", tint = TextPrimary)
                             }
                         }
@@ -557,7 +590,10 @@ fun AppDashboardScreen(
                                         .weight(1f)
                                         .clip(RoundedCornerShape(10.dp))
                                         .background(if (active) ElectricTeal else Color.Transparent)
-                                        .clickable { sidebarTab = tab }
+                                        .clickable {
+                                            if (!active) haptics(Haptic.Click)
+                                            sidebarTab = tab
+                                        }
                                         .padding(vertical = 8.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
@@ -589,7 +625,10 @@ fun AppDashboardScreen(
                                         modifier = Modifier
                                             .background(if (active) ElectricTeal else CardTeal, RoundedCornerShape(12.dp))
                                             .border(1.dp, if (active) ElectricTeal else BorderHighlight, RoundedCornerShape(12.dp))
-                                            .clickable { viewModel.setFilterLocation(loc) }
+                                            .clickable {
+                                                if (!active) haptics(Haptic.Click)
+                                                viewModel.setFilterLocation(loc)
+                                            }
                                             .padding(horizontal = 12.dp, vertical = 6.dp)
                                     ) {
                                         Text(text = loc, color = if (active) Color.Black else TextPrimary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -614,7 +653,10 @@ fun AppDashboardScreen(
                                         modifier = Modifier
                                             .background(if (active) ElectricTeal else CardTeal, RoundedCornerShape(12.dp))
                                             .border(1.dp, if (active) ElectricTeal else BorderHighlight, RoundedCornerShape(12.dp))
-                                            .clickable { viewModel.setFilterIndustry(ind) }
+                                            .clickable {
+                                                if (!active) haptics(Haptic.Click)
+                                                viewModel.setFilterIndustry(ind)
+                                            }
                                             .padding(horizontal = 12.dp, vertical = 6.dp)
                                     ) {
                                         Text(text = ind, color = if (active) Color.Black else TextPrimary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -639,6 +681,7 @@ fun AppDashboardScreen(
                                 onValueChange = { range ->
                                     viewModel.setFilterSalaryRange(range.start.toInt(), range.endInclusive.toInt())
                                 },
+                                onValueChangeFinished = { haptics(Haptic.Toggle) },
                                 valueRange = 5f..100f,
                                 colors = SliderDefaults.colors(
                                     activeTrackColor = ElectricTeal,
@@ -656,13 +699,19 @@ fun AppDashboardScreen(
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .clickable { viewModel.setSortOption(sortVal) }
+                                        .clickable {
+                                            if (!active) haptics(Haptic.Click)
+                                            viewModel.setSortOption(sortVal)
+                                        }
                                         .padding(vertical = 4.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     RadioButton(
                                         selected = active,
-                                        onClick = { viewModel.setSortOption(sortVal) },
+                                        onClick = {
+                                            if (!active) haptics(Haptic.Click)
+                                            viewModel.setSortOption(sortVal)
+                                        },
                                         colors = RadioButtonDefaults.colors(selectedColor = ElectricTeal)
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))
@@ -715,6 +764,7 @@ fun AppDashboardScreen(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .clickable {
+                                                    haptics(Haptic.Click)
                                                     isFilterSidebarOpen = false
                                                     onJobClick(bmJob.id)
                                                 },
@@ -746,7 +796,10 @@ fun AppDashboardScreen(
                                                     }
 
                                                     IconButton(
-                                                        onClick = { viewModel.toggleJobBookmark(bmJob.id, false) },
+                                                        onClick = {
+                                                            haptics(Haptic.Click)
+                                                            viewModel.toggleJobBookmark(bmJob.id, false)
+                                                        },
                                                         modifier = Modifier.size(28.dp)
                                                     ) {
                                                         Icon(
@@ -863,6 +916,7 @@ fun AppDashboardScreen(
                                                                 .clip(RoundedCornerShape(6.dp))
                                                                 .background(if (isActive) activeColor else Color.Transparent)
                                                                 .clickable {
+                                                                    haptics(Haptic.Toggle)
                                                                     val newStatus = if (isActive) null else dbStatus
                                                                     viewModel.updateJobApplicationStatus(bmJob.id, newStatus)
                                                                 }
@@ -896,7 +950,10 @@ fun AppDashboardScreen(
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Button(
-                                onClick = { viewModel.resetFilters() },
+                                onClick = {
+                                    haptics(Haptic.Reject)
+                                    viewModel.resetFilters()
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = SoftGray),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier
@@ -906,7 +963,10 @@ fun AppDashboardScreen(
                                 Text(text = "Reset", color = SunsetOrange, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                             }
                             Button(
-                                onClick = { isFilterSidebarOpen = false },
+                                onClick = {
+                                    haptics(Haptic.Confirm)
+                                    isFilterSidebarOpen = false
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = ElectricTeal),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.weight(1.5f)
@@ -916,7 +976,10 @@ fun AppDashboardScreen(
                         }
                     } else {
                         Button(
-                            onClick = { isFilterSidebarOpen = false },
+                            onClick = {
+                                haptics(Haptic.Click)
+                                isFilterSidebarOpen = false
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = ElectricTeal),
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.fillMaxWidth()

@@ -46,6 +46,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ui.theme.Haptic
+import com.example.ui.theme.SpaceGrotesk
+import com.example.ui.theme.rememberHaptics
 
 /**
  * Settings & Appearance Screen Composable.
@@ -61,6 +64,7 @@ fun AppearanceScreen(
     val reduceMotionPreference by viewModel.reduceMotionState.collectAsState()
     val useSystemFontSizePreference by viewModel.fontSizeState.collectAsState()
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
 
     Scaffold(
         containerColor = colorScheme.background,
@@ -71,11 +75,15 @@ fun AppearanceScreen(
                         text = "Settings & Appearance",
                         color = colorScheme.onBackground,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGrotesk
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = {
+                        haptics(Haptic.Click)
+                        onBack()
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -233,6 +241,7 @@ private fun ThemeOptionCard(
     modifier: Modifier = Modifier
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
     val containerColor = if (isSelected) colorScheme.surface else Color.Transparent
     val borderColor = if (isSelected) colorScheme.primary else colorScheme.outlineVariant
     val textColor = if (isSelected) colorScheme.primary else colorScheme.onSurfaceVariant
@@ -247,7 +256,10 @@ private fun ThemeOptionCard(
         border = BorderStroke(1.dp, borderColor),
         shape = RoundedCornerShape(12.dp),
         modifier = modifier
-            .clickable { onSelect() }
+            .clickable {
+                if (!isSelected) haptics(Haptic.Click)
+                onSelect()
+            }
             .height(84.dp)
     ) {
         Column(
@@ -283,6 +295,7 @@ private fun TogglePreferenceItem(
     onCheckedChange: (Boolean) -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
     Card(
         colors = CardDefaults.cardColors(containerColor = colorScheme.surface),
         shape = RoundedCornerShape(14.dp),
@@ -334,7 +347,10 @@ private fun TogglePreferenceItem(
             Spacer(modifier = Modifier.width(10.dp))
             Switch(
                 checked = checked,
-                onCheckedChange = onCheckedChange,
+                onCheckedChange = {
+                    haptics(Haptic.Toggle)
+                    onCheckedChange(it)
+                },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = colorScheme.onPrimary,
                     checkedTrackColor = colorScheme.primary,

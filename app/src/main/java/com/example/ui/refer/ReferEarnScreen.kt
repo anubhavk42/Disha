@@ -59,6 +59,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ui.theme.Haptic
+import com.example.ui.theme.SpaceGrotesk
+import com.example.ui.theme.rememberHaptics
 
 /**
  * Refer & Earn Screen Composable.
@@ -73,6 +76,7 @@ fun ReferEarnScreen(
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
 
     Scaffold(
         containerColor = colorScheme.background,
@@ -83,11 +87,15 @@ fun ReferEarnScreen(
                         text = "Refer & Earn Pro",
                         color = colorScheme.onBackground,
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGrotesk
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = {
+                        haptics(Haptic.Click)
+                        onBack()
+                    }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -197,6 +205,7 @@ fun ReferEarnScreen(
                             .background(colorScheme.background, RoundedCornerShape(12.dp))
                             .border(BorderStroke(1.dp, colorScheme.outlineVariant), RoundedCornerShape(12.dp))
                             .clickable {
+                                haptics(Haptic.Confirm)
                                 copyToClipboard(context, uiState.referralCode)
                             }
                             .padding(horizontal = 16.dp, vertical = 14.dp),
@@ -316,8 +325,12 @@ private fun ShareOptionButton(
     modifier: Modifier = Modifier
 ) {
     val colorScheme = MaterialTheme.colorScheme
+    val haptics = rememberHaptics()
     OutlinedButton(
-        onClick = onClick,
+        onClick = {
+            haptics(Haptic.Click)
+            onClick()
+        },
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = colorScheme.onSurface
         ),

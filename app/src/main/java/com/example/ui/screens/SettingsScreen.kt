@@ -74,6 +74,7 @@ fun AppProfileScreen(
     var editEmail by remember(activeSession) { mutableStateOf(activeSession?.email ?: "") }
     var editMobile by remember(activeSession) { mutableStateOf(activeSession?.mobile ?: "") }
     val hazeState = remember { HazeState() }
+    val haptics = rememberHaptics()
 
     Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
@@ -97,6 +98,7 @@ fun AppProfileScreen(
                         color = TextPrimary,
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGrotesk,
                         textAlign = TextAlign.Center
                     )
                     Text(
@@ -174,8 +176,10 @@ fun AppProfileScreen(
                         Button(
                             onClick = {
                                 if (editName.isBlank()) {
+                                    haptics(Haptic.Reject)
                                     Toast.makeText(context, "Please enter your name", Toast.LENGTH_SHORT).show()
                                 } else {
+                                    haptics(Haptic.Confirm)
                                     viewModel.updateProfile(editName, editDesignation, editEmail, editMobile)
                                     Toast.makeText(context, "Basic Information Updated!", Toast.LENGTH_SHORT).show()
                                 }
@@ -220,7 +224,10 @@ fun AppProfileScreen(
                         }
                         Switch(
                             checked = isDark,
-                            onCheckedChange = { viewModel.toggleDarkMode() },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.toggleDarkMode()
+                            },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = SeafoamMint,
                                 checkedTrackColor = ElectricTeal
@@ -267,7 +274,10 @@ fun AppProfileScreen(
                         }
                         Switch(
                             checked = isHighContrast,
-                            onCheckedChange = { viewModel.toggleHighContrastMode() },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.toggleHighContrastMode()
+                            },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = SeafoamMint,
                                 checkedTrackColor = ElectricTeal
@@ -310,6 +320,7 @@ fun AppProfileScreen(
                                 Switch(
                                     checked = connected,
                                     onCheckedChange = {
+                                        haptics(Haptic.Toggle)
                                         if (key == "daily_digest") {
                                             viewModel.updateToggleDigest(it)
                                         } else {
@@ -352,7 +363,10 @@ fun AppProfileScreen(
                                 .fillMaxWidth()
                                 .background(CardTeal.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
                                 .border(BorderStroke(1.dp, BorderHighlight.copy(alpha = 0.5f)), RoundedCornerShape(10.dp))
-                                .clickable { onNavigateToTab(DishaScreen.Appearance) }
+                                .clickable {
+                                    haptics(Haptic.Click)
+                                    onNavigateToTab(DishaScreen.Appearance)
+                                }
                                 .padding(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -373,7 +387,10 @@ fun AppProfileScreen(
                                 .fillMaxWidth()
                                 .background(CardTeal.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
                                 .border(BorderStroke(1.dp, BorderHighlight.copy(alpha = 0.5f)), RoundedCornerShape(10.dp))
-                                .clickable { onNavigateToTab(DishaScreen.ReferEarn) }
+                                .clickable {
+                                    haptics(Haptic.Click)
+                                    onNavigateToTab(DishaScreen.ReferEarn)
+                                }
                                 .padding(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -394,7 +411,10 @@ fun AppProfileScreen(
                                 .fillMaxWidth()
                                 .background(CardTeal.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
                                 .border(BorderStroke(1.dp, BorderHighlight.copy(alpha = 0.5f)), RoundedCornerShape(10.dp))
-                                .clickable { onNavigateToTab(DishaScreen.Privacy) }
+                                .clickable {
+                                    haptics(Haptic.Click)
+                                    onNavigateToTab(DishaScreen.Privacy)
+                                }
                                 .padding(12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -413,7 +433,10 @@ fun AppProfileScreen(
             // Logout
             item {
                 Button(
-                    onClick = { viewModel.logout() },
+                    onClick = {
+                        haptics(Haptic.Warning)
+                        viewModel.logout()
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = SoftGray),
                     modifier = Modifier
                         .fillMaxWidth()

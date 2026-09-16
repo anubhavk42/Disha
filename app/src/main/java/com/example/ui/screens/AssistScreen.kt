@@ -66,6 +66,7 @@ fun AppAssistScreen(
 ) {
     val jobs by viewModel.jobMatches.collectAsState()
     val hazeState = remember { HazeState() }
+    val haptics = rememberHaptics()
 
     Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
@@ -86,7 +87,8 @@ fun AppAssistScreen(
                     text = "AI Interview Assistant",
                     color = TextPrimary,
                     fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = SpaceGrotesk
                 )
                 Text(
                     text = "Review cover notes and key application insights",
@@ -104,7 +106,10 @@ fun AppAssistScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 6.dp)
-                        .clickable { onJobClick(job.id) }
+                        .clickable {
+                            haptics(Haptic.Click)
+                            onJobClick(job.id)
+                        }
                 ) {
                     Column(modifier = Modifier.padding(18.dp)) {
                         Row(

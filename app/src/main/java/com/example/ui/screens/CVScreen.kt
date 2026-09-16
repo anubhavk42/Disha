@@ -85,6 +85,7 @@ fun AppCVScreen(
     // Referral state
     var referralInput by remember { mutableStateOf("") }
     val hazeState = remember { HazeState() }
+    val haptics = rememberHaptics()
 
     Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
@@ -108,6 +109,7 @@ fun AppCVScreen(
                         color = TextPrimary,
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = SpaceGrotesk,
                         textAlign = TextAlign.Center
                     )
                     Text(
@@ -158,6 +160,7 @@ fun AppCVScreen(
 
                         Button(
                             onClick = {
+                                haptics(Haptic.Confirm)
                                 viewModel.uploadResumeAndProgress("Anubhav_Kapoor_NewCV.pdf")
                                 Toast.makeText(context, "Smart resume updated successfully!", Toast.LENGTH_SHORT).show()
                             },
@@ -260,8 +263,10 @@ fun AppCVScreen(
                             Button(
                                 onClick = {
                                     if (referralInput.trim().isEmpty()) {
+                                        haptics(Haptic.Reject)
                                         Toast.makeText(context, "Enter contact to refer", Toast.LENGTH_SHORT).show()
                                     } else {
+                                        haptics(Haptic.Confirm)
                                         viewModel.inviteReferral(referralInput)
                                         Toast.makeText(context, "Successfully referred $referralInput! +1 Smart Resume Earned Free!", Toast.LENGTH_LONG).show()
                                         referralInput = ""
@@ -315,7 +320,10 @@ fun AppCVScreen(
                             horizontalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
                             Button(
-                                onClick = { showPrivacyDialog = true },
+                                onClick = {
+                                    haptics(Haptic.Click)
+                                    showPrivacyDialog = true
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = CardTeal),
                                 border = BorderStroke(1.dp, BorderHighlight),
                                 shape = RoundedCornerShape(10.dp),
@@ -324,7 +332,10 @@ fun AppCVScreen(
                                 Text(text = "Privacy Policy", color = TextPrimary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             }
                             Button(
-                                onClick = { showTermsDialog = true },
+                                onClick = {
+                                    haptics(Haptic.Click)
+                                    showTermsDialog = true
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = CardTeal),
                                 border = BorderStroke(1.dp, BorderHighlight),
                                 shape = RoundedCornerShape(10.dp),
@@ -343,7 +354,10 @@ fun AppCVScreen(
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Button(
-                            onClick = { showDeleteConfirmDialog = true },
+                            onClick = {
+                                haptics(Haptic.Warning)
+                                showDeleteConfirmDialog = true
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = SoftGray),
                             border = BorderStroke(1.dp, BorderHighlight),
                             shape = RoundedCornerShape(12.dp),
@@ -392,7 +406,10 @@ fun AppCVScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showPrivacyDialog = false }) {
+                TextButton(onClick = {
+                    haptics(Haptic.Click)
+                    showPrivacyDialog = false
+                }) {
                     Text(text = "I Understand", color = ElectricTeal, fontWeight = FontWeight.Bold)
                 }
             },
@@ -424,7 +441,10 @@ fun AppCVScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showTermsDialog = false }) {
+                TextButton(onClick = {
+                    haptics(Haptic.Confirm)
+                    showTermsDialog = false
+                }) {
                     Text(text = "Accept", color = ElectricTeal, fontWeight = FontWeight.Bold)
                 }
             },
@@ -449,6 +469,7 @@ fun AppCVScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
+                        haptics(Haptic.Warning)
                         showDeleteConfirmDialog = false
                         viewModel.logout() // Clear active session & DB
                         Toast.makeText(context, "Your account and all your data have been deleted.", Toast.LENGTH_LONG).show()
@@ -458,7 +479,10 @@ fun AppCVScreen(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteConfirmDialog = false }) {
+                TextButton(onClick = {
+                    haptics(Haptic.Click)
+                    showDeleteConfirmDialog = false
+                }) {
                     Text(text = "Cancel", color = TextPrimary)
                 }
             },

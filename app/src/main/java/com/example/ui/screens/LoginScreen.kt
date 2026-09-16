@@ -65,6 +65,7 @@ fun OnboardingLoginScreen(viewModel: DishaViewModel, onCodeSent: () -> Unit, onA
     val authError by viewModel.authError.collectAsState()
     var isGoogleLogin by remember { mutableStateOf(false) }
     val activity = LocalContext.current as? Activity
+    val haptics = rememberHaptics()
 
     Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
         Column(
@@ -112,7 +113,8 @@ fun OnboardingLoginScreen(viewModel: DishaViewModel, onCodeSent: () -> Unit, onA
                     text = "Disha",
                     color = TextPrimary,
                     fontSize = 28.sp,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    fontFamily = SpaceGrotesk
                 )
             }
 
@@ -223,6 +225,7 @@ fun OnboardingLoginScreen(viewModel: DishaViewModel, onCodeSent: () -> Unit, onA
 
                 Button(
                     onClick = {
+                        haptics(Haptic.Click)
                         viewModel.onUserNameChange("Anubhav Kapoor")
                         viewModel.onEmailChange("anubhavk42@gmail.com")
                         viewModel.onPhoneChange("9988776655")
@@ -268,6 +271,7 @@ fun OnboardingOtpScreen(viewModel: DishaViewModel, onVerify: () -> Unit, onBack:
     val phone by viewModel.phoneInput.collectAsState()
     val isAuthenticating by viewModel.isAuthenticating.collectAsState()
     val authError by viewModel.authError.collectAsState()
+    val haptics = rememberHaptics()
 
     Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
         Column(
@@ -281,7 +285,10 @@ fun OnboardingOtpScreen(viewModel: DishaViewModel, onVerify: () -> Unit, onBack:
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBack) {
+                IconButton(onClick = {
+                    haptics(Haptic.Click)
+                    onBack()
+                }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = TextPrimary)
                 }
                 Text(
@@ -305,6 +312,7 @@ fun OnboardingOtpScreen(viewModel: DishaViewModel, onVerify: () -> Unit, onBack:
                     color = TextPrimary,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
+                    fontFamily = SpaceGrotesk,
                     textAlign = TextAlign.Center
                 )
 

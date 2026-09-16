@@ -63,6 +63,7 @@ fun OnboardingRefineScreen(viewModel: DishaViewModel, onDone: () -> Unit, onCanc
     var newRoleName by remember { mutableStateOf("") }
     var minVal by remember { mutableStateOf(12f) }
     var maxVal by remember { mutableStateOf(45f) }
+    val haptics = rememberHaptics()
 
     Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
         Column(
@@ -81,7 +82,10 @@ fun OnboardingRefineScreen(viewModel: DishaViewModel, onDone: () -> Unit, onCanc
                     color = TextSecondary,
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { onCancel() }
+                        .clickable {
+                            haptics(Haptic.Click)
+                            onCancel()
+                        }
                 )
                 Text(
                     text = "Refine Your Match Preferences",
@@ -133,8 +137,11 @@ fun OnboardingRefineScreen(viewModel: DishaViewModel, onDone: () -> Unit, onCanc
                         IconButton(
                             onClick = {
                                 if (newRoleName.trim().isNotEmpty()) {
+                                    haptics(Haptic.Confirm)
                                     viewModel.addPreferenceRole(newRoleName.trim())
                                     newRoleName = ""
+                                } else {
+                                    haptics(Haptic.Reject)
                                 }
                             },
                             modifier = Modifier

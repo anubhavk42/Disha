@@ -161,6 +161,17 @@ fun MainNavigationContainer(
         if (activeSession?.isSetupComplete == true && currentScreen in listOf(DishaScreen.Welcome, DishaScreen.Consent, DishaScreen.Login)) {
             navigateAndClearHistory(DishaScreen.Dashboard)
         }
+        // Symmetric case: session was cleared (e.g. "Log Out from Disha") while sitting on an
+        // authenticated screen - navigate back out to Welcome instead of leaving the logged-out
+        // user stranded on a screen that expects an active session.
+        val authenticatedScreens = listOf(
+            DishaScreen.Dashboard, DishaScreen.CV, DishaScreen.Automate, DishaScreen.Assist,
+            DishaScreen.Profile, DishaScreen.JobDetail, DishaScreen.SendNote,
+            DishaScreen.Appearance, DishaScreen.ReferEarn, DishaScreen.Privacy
+        )
+        if (activeSession == null && currentScreen in authenticatedScreens) {
+            navigateAndClearHistory(DishaScreen.Welcome)
+        }
     }
 
     Box(

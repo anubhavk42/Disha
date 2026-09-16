@@ -71,6 +71,7 @@ fun JobDetailScreen(
     onSendNoteClick: () -> Unit
 ) {
     val context = LocalContext.current
+    val haptics = rememberHaptics()
 
     Scaffold(
         containerColor = SpaceBlack,
@@ -83,12 +84,16 @@ fun JobDetailScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = onBack) {
+                IconButton(onClick = {
+                    haptics(Haptic.Click)
+                    onBack()
+                }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = TextPrimary)
                 }
                 Text(text = "Detail View", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = {
+                        haptics(Haptic.Click)
                         onToggleBookmark(job.id, !job.isBookmarked)
                     }) {
                         Icon(
@@ -97,7 +102,10 @@ fun JobDetailScreen(
                             tint = if (job.isBookmarked) SunsetOrange else TextPrimary
                         )
                     }
-                    IconButton(onClick = { Toast.makeText(context, "Shared link to job match!", Toast.LENGTH_SHORT).show() }) {
+                    IconButton(onClick = {
+                        haptics(Haptic.Click)
+                        Toast.makeText(context, "Shared link to job match!", Toast.LENGTH_SHORT).show()
+                    }) {
                         Icon(imageVector = Icons.Default.Share, contentDescription = "Share", tint = TextPrimary)
                     }
                 }
@@ -134,6 +142,7 @@ fun JobDetailScreen(
                                     color = TextPrimary,
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold,
+                                    fontFamily = SpaceGrotesk,
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis
                                 )
@@ -269,6 +278,7 @@ fun JobDetailScreen(
                                     modifier = Modifier
                                         .weight(1f)
                                         .clickable {
+                                            haptics(Haptic.Toggle)
                                             val newStatus = when (stepLabel) {
                                                 "Saved" -> null
                                                 "Applied" -> "Applied"
@@ -354,7 +364,10 @@ fun JobDetailScreen(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Button(
-                            onClick = { Toast.makeText(context, "Generated premium draft!", Toast.LENGTH_SHORT).show() },
+                            onClick = {
+                                haptics(Haptic.Confirm)
+                                Toast.makeText(context, "Generated premium draft!", Toast.LENGTH_SHORT).show()
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.primary,
                                 contentColor = MaterialTheme.colorScheme.onPrimary
@@ -432,7 +445,10 @@ fun JobDetailScreen(
 
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Button(
-                                onClick = { Toast.makeText(context, "Opening LinkedIn recruiter profile...", Toast.LENGTH_SHORT).show() },
+                                onClick = {
+                                    haptics(Haptic.Click)
+                                    Toast.makeText(context, "Opening LinkedIn recruiter profile...", Toast.LENGTH_SHORT).show()
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = SoftGray),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.weight(1f).height(48.dp)
@@ -443,7 +459,10 @@ fun JobDetailScreen(
                             Spacer(modifier = Modifier.width(8.dp))
 
                             Button(
-                                onClick = onSendNoteClick,
+                                onClick = {
+                                    haptics(Haptic.Click)
+                                    onSendNoteClick()
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = ElectricTeal),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.weight(1f).height(48.dp)
@@ -472,6 +491,7 @@ fun SendNoteScreen(
         )
     }
     val context = LocalContext.current
+    val haptics = rememberHaptics()
 
     Scaffold(containerColor = SpaceBlack, contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
         Column(
@@ -491,7 +511,10 @@ fun SendNoteScreen(
                     color = SunsetOrange,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    modifier = Modifier.clickable { onCancel() }
+                    modifier = Modifier.clickable {
+                        haptics(Haptic.Click)
+                        onCancel()
+                    }
                 )
                 Text(text = "Personal Note", color = TextPrimary, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 Text(
@@ -500,6 +523,7 @@ fun SendNoteScreen(
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     modifier = Modifier.clickable {
+                        haptics(Haptic.Confirm)
                         Toast.makeText(context, "Note sent to recruiter!", Toast.LENGTH_SHORT).show()
                         onSent()
                     }

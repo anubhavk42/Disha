@@ -20,7 +20,10 @@ private val googleFontProvider =
 
 // Space Grotesk: distinctive geometric grotesk for headings - gives Disha a
 // confident, modern "direction forward" feel that plain system Roboto lacks.
-private val SpaceGrotesk =
+// Exposed (not private) so screens can apply it directly to heading Text()
+// calls that specify their own fontSize/fontWeight instead of pulling a
+// named MaterialTheme.typography.* style.
+val SpaceGrotesk =
   FontFamily(
     Font(googleFont = GoogleFont("Space Grotesk"), fontProvider = googleFontProvider, weight = FontWeight.Normal),
     Font(googleFont = GoogleFont("Space Grotesk"), fontProvider = googleFontProvider, weight = FontWeight.Medium),

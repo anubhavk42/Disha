@@ -65,6 +65,7 @@ fun AppAutomateScreen(
 ) {
     val activeSession by viewModel.activeSession.collectAsState()
     val hazeState = remember { HazeState() }
+    val haptics = rememberHaptics()
 
     Box(modifier = Modifier.fillMaxSize()) {
     Scaffold(
@@ -85,7 +86,8 @@ fun AppAutomateScreen(
                 text = "Automate Scouting",
                 color = TextPrimary,
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontFamily = SpaceGrotesk
             )
             Text(
                 text = "Let AI scout and prepare applications on your behalf",
@@ -116,7 +118,10 @@ fun AppAutomateScreen(
                         val autoApply = activeSession?.autoApplyAlerts ?: false
                         Switch(
                             checked = autoApply,
-                            onCheckedChange = { viewModel.updateToggleAutoApply(it) },
+                            onCheckedChange = {
+                                haptics(Haptic.Toggle)
+                                viewModel.updateToggleAutoApply(it)
+                            },
                             colors = SwitchDefaults.colors(checkedThumbColor = SeafoamMint)
                         )
                     }
@@ -184,7 +189,10 @@ fun AppAutomateScreen(
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Button(
-                        onClick = { viewModel.simulateIncomingMatch(context) },
+                        onClick = {
+                            haptics(Haptic.Confirm)
+                            viewModel.simulateIncomingMatch(context)
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = ElectricTeal),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.fillMaxWidth()
