@@ -78,7 +78,7 @@ fun AppAutomateScreen(
                 .hazeSource(state = hazeState)
                 .padding(24.dp)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 84.dp)
+                .padding(bottom = bottomNavBarClearance())
         ) {
             Spacer(modifier = Modifier.height(24.dp))
             Text(

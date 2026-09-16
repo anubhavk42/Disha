@@ -221,7 +221,7 @@ fun AppDashboardScreen(
                     .hazeSource(state = hazeState)
                     .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
-                contentPadding = PaddingValues(bottom = 108.dp)
+                contentPadding = PaddingValues(bottom = bottomNavBarClearance())
             ) {
                 // Greetings Greeting Header
                 item {

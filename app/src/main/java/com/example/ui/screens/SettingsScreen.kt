@@ -87,7 +87,7 @@ fun AppProfileScreen(
                 .hazeSource(state = hazeState)
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(top = 16.dp, bottom = 108.dp)
+            contentPadding = PaddingValues(top = 16.dp, bottom = bottomNavBarClearance())
         ) {
             // Title
             item {

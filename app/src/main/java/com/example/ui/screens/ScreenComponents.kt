@@ -51,6 +51,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -183,6 +184,23 @@ fun FlowRowSim(
     }
 }
 
+private val BottomNavBarHeight = 72.dp
+private val BottomNavBarBottomMargin = 12.dp
+private val BottomNavBarContentSpacing = 16.dp
+
+/**
+ * Extra bottom padding scrollable content behind [AppBottomNavigationBar] must reserve so its
+ * last item is never obscured by the bar. The bar floats as an overlay outside of Scaffold's
+ * `bottomBar` slot (it needs to sit above a Box shared with the rest of the screen for the Haze
+ * blur to sample correctly), so Scaffold's own innerPadding does NOT account for it - callers
+ * must add this manually to their scrollable content's bottom padding/contentPadding.
+ */
+@Composable
+fun bottomNavBarClearance(): Dp {
+    val navigationBarInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    return navigationBarInset + BottomNavBarBottomMargin + BottomNavBarHeight + BottomNavBarContentSpacing
+}
+
 /**
  * Floating glassmorphic pill bottom bar. [hazeState] must be the same instance applied via
  * `Modifier.hazeSource(hazeState)` to the scrollable content behind this bar (see the screens
@@ -215,9 +233,9 @@ fun AppBottomNavigationBar(
     Row(
         modifier = modifier
             .windowInsetsPadding(WindowInsets.navigationBars)
-            .padding(start = 18.dp, end = 18.dp, bottom = 12.dp)
+            .padding(start = 18.dp, end = 18.dp, bottom = BottomNavBarBottomMargin)
             .fillMaxWidth()
-            .height(72.dp)
+            .height(BottomNavBarHeight)
             .shadow(elevation = 16.dp, shape = pillShape, ambientColor = Color.Black.copy(alpha = 0.3f), spotColor = Color.Black.copy(alpha = 0.3f))
             .clip(pillShape)
             .hazeEffect(state = hazeState, style = glassStyle)

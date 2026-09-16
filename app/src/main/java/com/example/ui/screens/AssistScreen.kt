@@ -78,7 +78,7 @@ fun AppAssistScreen(
                 .fillMaxSize()
                 .hazeSource(state = hazeState)
                 .padding(24.dp),
-            contentPadding = PaddingValues(bottom = 84.dp)
+            contentPadding = PaddingValues(bottom = bottomNavBarClearance())
         ) {
             item {
                 Spacer(modifier = Modifier.height(24.dp))

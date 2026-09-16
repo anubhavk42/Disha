@@ -98,7 +98,7 @@ fun AppCVScreen(
                 .hazeSource(state = hazeState)
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(top = 16.dp, bottom = 108.dp)
+            contentPadding = PaddingValues(top = 16.dp, bottom = bottomNavBarClearance())
         ) {
             // Title
             item {
@@ -216,7 +216,7 @@ fun AppCVScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(text = "Subscription Fees", color = TextSecondary, fontSize = 13.sp)
-                                Text(text = "₹0 (No Hidden Fees)", color = SunsetOrange, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                                Text(text = "₹0 (No Hidden Fees)", color = SeafoamMint, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
                             }
                         }
                     }
