@@ -1,0 +1,9 @@
+# Copy this file to local.properties (already gitignored - never commit real
+# keys) and fill in the values below. Android Studio manages `sdk.dir` in
+# local.properties automatically; you don't need to set it here.
+
+# Firebase Web API key for this project (Firebase Console > Project Settings >
+# General > Web API Key). Wired into BuildConfig.FIREBASE_API_KEY by
+# app/build.gradle.kts. If left unset, the app runs against the built-in
+# mock/sandbox auth fallback in FirebaseService.kt instead of real Firebase.
+FIREBASE_API_KEY=

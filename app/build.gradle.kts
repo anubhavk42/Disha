@@ -1,11 +1,22 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.google.devtools.ksp)
   alias(libs.plugins.roborazzi)
-  alias(libs.plugins.secrets)
   alias(libs.plugins.google.services)
 }
+
+// Local, gitignored secrets (see local.properties.example) - never committed.
+val localProperties = Properties().apply {
+  val localPropertiesFile = rootProject.file("local.properties")
+  if (localPropertiesFile.exists()) {
+    load(FileInputStream(localPropertiesFile))
+  }
+}
+val firebaseApiKey: String = localProperties.getProperty("FIREBASE_API_KEY", "")
 
 android {
   namespace = "com.example"
@@ -20,7 +31,9 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    buildConfigField("String", "FIREBASE_API_KEY", "\"\"")
+    // Blank when FIREBASE_API_KEY isn't set in local.properties - FirebaseService then skips
+    // live Firebase calls and runs against its built-in mock/sandbox fallback instead.
+    buildConfigField("String", "FIREBASE_API_KEY", "\"$firebaseApiKey\"")
   }
 
   signingConfigs {
@@ -59,13 +72,6 @@ android {
     buildConfig = true
   }
   testOptions { unitTests { isIncludeAndroidResources = true } }
-}
-
-// Configure the Secrets Gradle Plugin to use .env and .env.example files
-// to match the convention used in Web projects.
-secrets {
-  propertiesFileName = ".env"
-  defaultPropertiesFileName = ".env.example"
 }
 
 // Some unused dependencies are commented out below instead of being removed.

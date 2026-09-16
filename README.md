@@ -64,7 +64,13 @@ What that cost: automating applications across platforms Disha doesn't control i
 
 ## Setup
 
-Add your keys to `local.properties`.
+1. Copy `local.properties.example` to `local.properties` (already gitignored - real keys never get committed).
+2. Add your Firebase project's Web API key:
+   ```properties
+   FIREBASE_API_KEY=your_firebase_web_api_key_here
+   ```
+   Find this in the [Firebase Console](https://console.firebase.google.com) under Project Settings > General > Web API Key. `app/build.gradle.kts` reads this value at build time and wires it into `BuildConfig.FIREBASE_API_KEY`.
+3. If you skip this step, `FIREBASE_API_KEY` builds as an empty string and `FirebaseService.kt` automatically falls back to a built-in mock/sandbox auth flow instead of calling real Firebase - so the app runs end-to-end without any keys configured, just without real authentication.
 
 ## How I would measure it
 
