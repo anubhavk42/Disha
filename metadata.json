@@ -1,0 +1,6 @@
+{
+  "name": "Disha",
+  "description": "Disha Match Scouting Dashboard - Connect external job sources and find high-potential matches.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
