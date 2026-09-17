@@ -3,6 +3,8 @@
 
 AI-powered career matching app for India — matches your profile to jobs intelligently, automates applications, and helps you land better roles faster.
 
+**▶️ [Try the live demo](https://appetize.io/app/b_b3t4ncrm44fpkwie7t3pm3e7jm)** — run the app in your browser, no install needed.
+
 ## Demo
 
 https://github.com/user-attachments/assets/cc806bbe-88f5-4fdc-98bb-a0932b9b0a78
