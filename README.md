@@ -36,15 +36,31 @@ The hard choice was building **auto-apply automation** across third-party platfo
 
 What that cost: automating applications across platforms Disha doesn't control is inherently fragile — those platforms can change their structure at any time and break the flow — and it raises a real trust bar, since users are letting the app act on their behalf, not just advise them.
 
-## What's in v1
+## Feature breakdown
 
-- 🎯 AI job matching — match scoring based on your profile
-- 🤖 Auto apply — automate applications across LinkedIn, Indeed & Naukri
-- 📄 AI-generated personalized cover letters
-- 🔍 Live job listings aggregated from multiple platforms
-- 💼 CV builder — professional resume PDF (₹49)
-- 🔔 Smart notifications — job alerts and application updates
-- 🔒 Privacy-first data handling — data never sold, always in the user's control
+### AI job matching
+Match scoring based on the user's profile against a job listing, surfaced as a ranked feed rather than a raw list.
+
+### Auto apply (designed flow)
+The intended v1 direction is automating the application step across LinkedIn, Indeed, and Naukri — see Known Limits below for what's actually wired up today versus what's the target design.
+
+### AI-generated cover letters
+Personalized cover letter drafts generated per job, rather than a single generic template reused across applications.
+
+### Job listings
+A browsable, filterable feed — currently backed by a 20-role seeded dataset spanning varied domains (not yet live-scraped; see Known Limits).
+
+### CV builder
+Generates a professional resume PDF, priced at ₹49 as a deliberate signal of demand rather than a free growth lever (see the trade-off framing above and Known Limits for payment status).
+
+### Smart notifications
+Job alerts and application status updates.
+
+### Privacy-first data handling
+Data isn't sold, and stays under the user's control by design — not an afterthought bolted on later.
+
+### Design pass (v1.1 polish)
+A follow-up pass focused on making the app feel finished rather than prototype-rough: fixed an accessibility bug where the cover-letter action button was rendering white text on a white background, replaced a hardcoded color clash on user avatars, resolved layout collisions and status-bar clipping on a few screens, redesigned the bottom navigation into a glassmorphic pill style, and — importantly — removed raw backend/internal terminology ("FCM Notification Center," "Deep Web Scraping Engine") that had been leaking into user-facing copy. None of this changed what the app does; it changed whether it reads as a finished product.
 
 ## What's deliberately not in v1
 
@@ -93,4 +109,4 @@ This project was built using AI-assisted development with [Claude Code](https://
 
 ---
 
-**Anubhav Kapoor** — Product & Growth Associate → APM. Part of a portfolio of shipped product experiments: [Khyaal](https://github.com/anubhavk42/khyaal) · [SAAR](https://github.com/anubhavk42/saar) · [NutriLens AI](https://github.com/anubhavk42/nutrilens-ai) · [Aakash](https://github.com/anubhavk42/Aakash)
+**Anubhav Kapoor** — Product & Growth Associate → APM. Part of a portfolio of shipped product experiments: [Khyaal](https://github.com/anubhavk42/khyaal) · [SAAR](https://github.com/anubhavk42/SAAR-NEWS-) · [NutriLens AI](https://github.com/anubhavk42/nutrilens-ai) · [Aakash](https://github.com/anubhavk42/Aakash) · [Lakshya](https://github.com/anubhavk42/Lakshya)
