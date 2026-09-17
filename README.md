@@ -3,6 +3,10 @@
 
 AI-powered career matching app for India — matches your profile to jobs intelligently, automates applications, and helps you land better roles faster.
 
+## Demo
+
+https://github.com/user-attachments/assets/cc806bbe-88f5-4fdc-98bb-a0932b9b0a78
+
 ## The problem
 
 Job hunting in India today means juggling five different platforms, tailoring the same resume a dozen slightly different ways, and applying to roles without knowing if you're even a realistic match — most of that effort goes into repetitive manual work rather than actually deciding which roles are worth pursuing.
